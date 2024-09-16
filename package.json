@@ -24,6 +24,7 @@
     "pre-commit": "./node_modules/.bin/nano-staged"
   },
   "devDependencies": {
+    "pnpm": "^9.0.0",
     "@eslint/compat": "^1.1.1",
     "@eslint/js": "^9.8.0",
     "@fontsource-variable/inter": "^5.0.20",
@@ -56,9 +57,9 @@
     "vite": "^5.4.0"
   },
   "engines": {
-    "node": "20",
-    "pnpm": "9.0",
-    "yarn": "This project is configured to use pnpm"
+    "node": ">=20",
+    "pnpm": ">=9.0",
+   
   },
   "nano-staged": {
     "*.{ts,tsx,js,json,css,md}": "prettier --write"

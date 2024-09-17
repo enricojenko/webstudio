@@ -4,6 +4,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    
+  "build": "rm -rf lib && ./node_modules/.bin/esbuild src/index.ts --outdir=lib --bundle --format=esm --packages=external",
+
+
     "build": "pnpm -r --filter='!./fixtures/*' build",
     "dts": "pnpm -r dts",
     "dev": "pnpm --filter='@webstudio-is/builder' --filter='@webstudio-is/prisma-client' --parallel --recursive dev",

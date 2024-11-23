@@ -1,0 +1,24 @@
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+        corepack: true
+
+    - name: Install Dependencies
+      run: |
+        corepack enable
+        corepack prepare yarn@1.22.22 --activate
+        yarn install
+
+    - name: Build and Test
+      run: |
+        yarn build
+        yarn test
+
+    - name: Deploy
+      run: yarn deploy

@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: webstudio
+    env: docker
+    docker:
+      image: '$GITHUB_REPO_OWNER/webstudio:latest'
+      build:
+        context: .
+        dockerfile: Dockerfile
+    ports:
+      - '8080:8080'
+    envVars:
+      - key: NODE_ENV
+        value: production

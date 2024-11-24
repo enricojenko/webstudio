@@ -1,20 +1,27 @@
-# Use the official Node.js 16 image
-FROM node:16
+# Use the official Node.js 20 image as it supports Corepack
+FROM node:20
 
-# Set the working directory to /app
+# Enable Corepack to manage package managers
+RUN corepack enable
+
+# Set the working directory in the container to /app
 WORKDIR /app
 
-# Copy the package*.json files to the working directory
-COPY package*.json ./
+# Copy the package.json and pnpm-lock.yaml files to the working directory
+# Ensure you also copy any other relevant config files like .pnpmfile.cjs if you have one
+COPY package.json pnpm-lock.yaml* ./
 
-# Install the dependencies
-RUN npm install
+# Prepare pnpm using Corepack and activate the specified version
+RUN corepack prepare pnpm@9.0.2 --activate
 
-# Copy the application code to the working directory
+# Install dependencies using pnpm
+RUN pnpm install
+
+# Copy the rest of your application code to the container
 COPY . .
 
-# Expose the port
+# Expose the port the app runs on
 EXPOSE 8080
 
-# Run the command to start the application
-CMD ["npm", "start"]
+# Command to run the application, adjust according to your package.json scripts
+CMD ["pnpm", "run", "dev"]

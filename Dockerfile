@@ -7,6 +7,13 @@ RUN corepack enable
 # Set the working directory in the container to /app
 WORKDIR /app
 
+# Node uses a non-root user 'node' by default in their official images, setting ownership:
+# This step is crucial if there are permissions issues during pnpm install
+COPY --chown=node:node . .
+
+# Use the non-root user to run subsequent commands
+USER node
+
 # Copy the package.json and pnpm-lock.yaml files to the working directory
 # Ensure you also copy any other relevant config files like .pnpmfile.cjs if you have one
 COPY package.json pnpm-lock.yaml* ./
@@ -16,9 +23,6 @@ RUN corepack prepare pnpm@9.0.2 --activate
 
 # Install dependencies using pnpm
 RUN pnpm install
-
-# Copy the rest of your application code to the container
-COPY . .
 
 # Expose the port the app runs on
 EXPOSE 8080
